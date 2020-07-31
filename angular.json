@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "affittagram"
+    }
+  },
+  "defaultProject": "affittagram",
+  "cli": {
+    "analytics": "33d61885-2949-4b2c-a93b-49bc3645fb78"
+  }
 }

@@ -12,10 +12,10 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use('/', routes);
 
-app.use(express.static(path.join(__dirname, '../dist/test')));
+app.use(express.static(path.join(__dirname, '../dist/affittagram')));
 
 app.get('/*', function(req, res) {
-  res.send(path.join(__dirname, '../dist/test/index.html'));
+  res.send(path.join(__dirname, '../dist/affittagram/index.html'));
 })
 
 module.exports = app;
