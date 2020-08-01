@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const app = require('./app');
 
-var dbURI = 'mongodb://localhost/test';
+var dbURI = 'mongodb://localhost/affittagram';
 
 if (process.env.NODE_ENV === 'production')
   dbURI = process.env.MONGODB_URI;

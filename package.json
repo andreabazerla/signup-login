@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "node ./api/bin/www",
-    "start:dev": "nodemon ./api/bin/www",
+    "start:server": "nodemon ./api/bin/www",
+    "start:client": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -17,21 +18,19 @@
     "npm": "6.x"
   },
   "dependencies": {
-    "@angular/cli": "~10.0.4",
-    "@angular/compiler-cli": "~10.0.5",
     "@angular-devkit/build-angular": "~0.1000.4",
-    "typescript": "~3.9.5",
     "@angular/animations": "~10.0.5",
+    "@angular/cdk": "^10.1.1",
+    "@angular/cli": "~10.0.4",
     "@angular/common": "~10.0.5",
     "@angular/compiler": "~10.0.5",
+    "@angular/compiler-cli": "~10.0.5",
     "@angular/core": "~10.0.5",
     "@angular/forms": "~10.0.5",
+    "@angular/material": "^10.1.1",
     "@angular/platform-browser": "~10.0.5",
     "@angular/platform-browser-dynamic": "~10.0.5",
     "@angular/router": "~10.0.5",
-    "rxjs": "~6.5.5",
-    "tslib": "^2.0.0",
-    "zone.js": "~0.10.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
@@ -39,7 +38,11 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.25"
+    "mongoose": "^5.9.25",
+    "rxjs": "~6.5.5",
+    "tslib": "^2.0.0",
+    "typescript": "~3.9.5",
+    "zone.js": "~0.10.3"
   },
   "devDependencies": {
     "@types/node": "^12.11.1",
