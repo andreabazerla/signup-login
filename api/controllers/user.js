@@ -3,7 +3,7 @@ const passport = require('passport');
 
 const User = mongoose.model('User');
 
-module.exports.signup = (req, res) => {
+exports.signup = (req, res) => {
 
   const user = new User({
     firstName: req.body.firstName,
@@ -29,7 +29,7 @@ module.exports.signup = (req, res) => {
     })
 };
 
-module.exports.login = (req, res) => {
+exports.login = (req, res) => {
   passport.authenticate('local', (err, user, info) => {
     let token;
 
