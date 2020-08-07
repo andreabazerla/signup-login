@@ -1,17 +1,26 @@
-const cors = require('cors');
-const bodyParser = require('body-parser');
 const express = require('express');
+const bodyParser = require('body-parser');
 const path = require('path');
+const passport = require('passport');
 
-const routes = require('./routes/index');
+// Configurations
 require('./db');
+require('./configuration/passport');
 
 var app = express();
 
+// body-parser
 app.use(bodyParser.json());
-app.use(cors());
-app.use('/', routes);
+app.use(bodyParser.urlencoded({ extended: false }));
 
+// Passport.js
+app.use(passport.initialize());
+
+// Routes
+const routes = require('./routes/index');
+app.use('/api', routes);
+
+// Static files
 app.use(express.static(path.join(__dirname, '../dist/affittagram')));
 
 app.get('/*', function(req, res) {

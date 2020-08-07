@@ -1,0 +1,37 @@
+<mat-card>
+  <mat-card-title-group>
+    <mat-card-title>Sign up</mat-card-title>
+    <mat-card-subtitle>Insert the following data to sign up</mat-card-subtitle>
+  </mat-card-title-group>
+  <!-- <mat-spinner *ngIf="isLoading"></mat-spinner> -->
+  <form (submit)="onSignup(signupForm)" #signupForm="ngForm">
+    <mat-form-field>
+      <input matInput name="firstName" ngModel type="text" placeholder="First Name" #firstNameInput="ngModel" required>
+      <mat-error *ngIf="firstNameInput.invalid">Please enter a valid first name.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput name="lastName" ngModel type="text" placeholder="Last Name" #lastNameInput="ngModel" required>
+      <mat-error *ngIf="lastNameInput.invalid">Please enter a valid last name.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput name="email" ngModel type="email" placeholder="E-mail" #emailInput="ngModel" required email>
+      <mat-error *ngIf="emailInput.invalid">Please enter a valid email.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="password" name="password" ngModel matInput placeholder="Password" #passwordInput="ngModel" required password>
+      <mat-error *ngIf="passwordInput.invalid">Please enter a valid password.</mat-error>
+    </mat-form-field>
+    <label>Gender:</label>
+    <mat-radio-group name="gender" aria-label="Select an option" ngModel required>
+      <mat-radio-button value="1">Male</mat-radio-button>
+      <mat-radio-button value="2">Female</mat-radio-button>
+    </mat-radio-group>
+    <mat-form-field appearance="fill">
+      <mat-label>Date of birth</mat-label>
+      <input matInput [matDatepicker]="picker" name="birthday" ngModel required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker startView="multi-year"></mat-datepicker>
+    </mat-form-field>
+    <mat-card-actions><button mat-raised-button color="accent" type="submit">Sign up</button></mat-card-actions>
+  </form>
+</mat-card>

@@ -7,3 +7,5 @@ if (process.env.NODE_ENV === 'production')
   dbURI = process.env.MONGODB_URI;
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true, useUnifiedTopology: true });
+
+require('./models/user');
