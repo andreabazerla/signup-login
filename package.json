@@ -10,10 +10,10 @@
   "private": true,
   "scripts": {
     "ng": "ng",
-    "start": "node /dist/api/app.js",
+    "start": "node ./dist/api/app.js",
     "pre-dev": "tsc -p api",
-    "dev": "concurrently \"mongod\" \"ng serve --proxy-config proxy.conf.json --open\" \"tsc -w -p api\" \"nodemon /dist/api/app.js\"",
-    "prod": "concurrently \"mongod\" \"ng build --aot --prod && tsc -p api && node /dist/api/app.js\"",
+    "dev": "concurrently \"mongod\" \"ng serve --proxy-config proxy.conf.json --open\" \"tsc -w -p api\" \"nodemon ./dist/api/app.js\"",
+    "prod": "concurrently \"mongod\" \"ng build --aot --prod && tsc -p api && node ./dist/api/app.js\"",
     "build": "ng build",
     "build-production": "ng build --aot --prod",
     "test": "ng test",
