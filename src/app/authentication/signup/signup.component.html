@@ -21,6 +21,11 @@
       <input matInput type="password" name="password" ngModel matInput placeholder="Password" #passwordInput="ngModel" required password>
       <mat-error *ngIf="passwordInput.invalid">Please enter a valid password.</mat-error>
     </mat-form-field>
+    <mat-form-field>
+      <span matPrefix>@ &nbsp;</span>
+      <input matInput name="username" ngModel type="text" placeholder="Username" #usernameInput="ngModel" required>
+      <mat-error *ngIf="usernameInput.invalid">Please enter a valid last name.</mat-error>
+    </mat-form-field>
     <label>Gender:</label>
     <mat-radio-group name="gender" aria-label="Select an option" ngModel required>
       <mat-radio-button value="1">Male</mat-radio-button>

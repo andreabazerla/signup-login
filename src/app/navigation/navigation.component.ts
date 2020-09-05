@@ -12,6 +12,7 @@ import { AuthenticationService } from './../services/authentication.service';
 })
 export class NavigationComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
+  userUsername: string;
   private authenticationSubscription: Subscription;
 
   constructor(
@@ -33,6 +34,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
       .subscribe((isAuthenticated) => {
         this.userIsAuthenticated = isAuthenticated;
       });
+    this.userUsername = this.authenticationService.getUserUsername();
   }
 
   ngOnDestroy() {

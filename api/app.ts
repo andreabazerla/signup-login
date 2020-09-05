@@ -1,12 +1,35 @@
 #!/usr/bin/env node
 
-const debug = require('debug')('affittagram');
-const dotenv = require('dotenv');
-const http = require('http');
+import * as express from 'express';
+import * as dotenv from 'dotenv';
+import * as http from 'http';
+import * as path from 'path';
+import * as passport from 'passport';
+import * as morgan from 'morgan';
+import * as debug from 'debug';
 
-const app = require('../app.js');
+// Configurations
+import setDb from './db';
+import './configuration/passport';
+import setRoutes, * as routes from './routes/routes';
+
+const app = express();
 
 dotenv.config();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+// Morgan
+if (process.env.NODE_ENV !== 'test') {
+  app.use(morgan('dev'));
+}
+
+// Passport.js
+app.use(passport.initialize());
+
+// Static files
+app.use(express.static(path.join(__dirname, '../dist/client/')));
 
 const normalizePort = val => {
   const port = parseInt(val, 10);
@@ -23,6 +46,8 @@ const normalizePort = val => {
 };
 
 const onError = error => {
+  const address = server.address();
+
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -56,4 +81,21 @@ const server = http.createServer(app);
 server.on('error', onError);
 server.on('listening', onListening);
 
-server.listen(port);
+async function init(): Promise<any> {
+  try {
+    await setDb();
+    setRoutes(app);
+
+    app.get('/*', (req, res) => {
+      res.send(path.join(__dirname, '../dist/client/index.html'));
+    });
+
+    server.listen(port);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+init();
+
+export { app };

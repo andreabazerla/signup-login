@@ -31,6 +31,7 @@ export class SignupComponent implements OnInit {
     const lastName = form.value.lastName;
     const email = form.value.email;
     const password = form.value.password;
+    const username = form.value.username;
     const gender = form.value.gender;
     const birthday = form.value.birthday;
 
@@ -39,6 +40,7 @@ export class SignupComponent implements OnInit {
       lastName,
       email,
       password,
+      username,
       gender,
       birthday
     };
