@@ -37,7 +37,7 @@ class UserController extends BaseController {
 
   login = (req, res) => {
     passport.authenticate('local', (err, user, info) => {
-      let token;
+      let token: string;
       if (err) {
         res.status(404).json(err);
         return;
