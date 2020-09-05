@@ -29,7 +29,7 @@ if (process.env.NODE_ENV !== 'test') {
 app.use(passport.initialize());
 
 // Static files
-app.use(express.static(path.join(__dirname, '../dist/client/')));
+app.use(express.static(path.join(__dirname, '../client/')));
 
 const normalizePort = val => {
   const port = parseInt(val, 10);
@@ -87,7 +87,7 @@ async function init(): Promise<any> {
     setRoutes(app);
 
     app.get('/*', (req, res) => {
-      res.send(path.join(__dirname, '../dist/client/index.html'));
+      res.send(path.join(__dirname, '../client/index.html'));
     });
 
     server.listen(port);
