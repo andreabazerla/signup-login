@@ -1,7 +1,5 @@
-import { Subscription } from 'rxjs';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 import {
   AuthenticationService,
   LoginPayload,
@@ -12,24 +10,14 @@ import {
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent {
   isLoading = false;
-  private authenticationSubscription: Subscription;
 
   constructor(
-    public authenticationService: AuthenticationService,
-    private router: Router
+    public authenticationService: AuthenticationService
   ) {}
 
-  ngOnInit() {
-    this.authenticationSubscription = this.authenticationService.getAuthenticationListener().subscribe();
-  }
-
-  ngOnDestroy() {
-    this.authenticationSubscription.unsubscribe();
-  }
-
-  onLogin(form: NgForm) {
+  onLogin(form: NgForm): void {
     if (form.invalid) {
       return;
     }

@@ -12,9 +12,6 @@ const routes: Routes = [
         (m) => m.AuthenticationModule
       ),
   },
-  // TO-DO
-  // { path: '',   redirectTo: '/', pathMatch: 'full' },
-  // { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

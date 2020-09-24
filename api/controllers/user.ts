@@ -49,10 +49,8 @@ class UserController extends BaseController {
         res.json({
           token,
           expiresIn: 3600,
-          userId: user._id,
-          userUsername: user.username,
+          userId: user._id
         });
-        // res.redirect('/users/' + req.user.username);
       } else {
         res.status(401).json(info);
       }
@@ -61,19 +59,3 @@ class UserController extends BaseController {
 }
 
 export default UserController;
-
-// exports.getUserProfile = (req, res) => {
-//   User.findById(req.params.id)
-//     .then(user => {
-//       if (user) {
-//         res.status(200).json(user);
-//       } else {
-//         res.status(404).json({ message: "User not found!" });
-//       }
-//     })
-//     .catch(error => {
-//       res.status(500).json({
-//         message: "Fetching user failed!"
-//       });
-//     });
-// }

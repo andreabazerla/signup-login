@@ -11,7 +11,6 @@ import { UserService } from './user.service';
 
 // RxJS
 import { Observable, Subject, concat } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 // Costants
 const API_URL = '/api';
@@ -40,99 +39,92 @@ export interface LoginPayload {
   providedIn: 'root',
 })
 export class AuthenticationService {
-  currentUser: User = new User();
-
-  private token: string;
-  private tokenTimer: any;
-  private userId: string;
-  private userUsername: string;
+  private currentUser: User = new User();
+  private tokenTimer: number;
   private isAuthenticated = false;
   private authenticationListener = new Subject<boolean>();
+  private userListener = new Subject<User>();
 
   constructor(
     private httpClient: HttpClient,
     private router: Router,
     private userService: UserService,
-    private activatedRoute: ActivatedRoute,
-    private jwtHelperService: JwtHelperService,
+    private jwtHelperService: JwtHelperService
   ) {
-    // const token = localStorage.getItem('token');
-    // if (token) {
-    //   const decodedUser = this.decodeUserFromToken(token);
-    //   this.setCurrentUser(decodedUser);
-    // }
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedUser = this.decodeUserFromToken(token);
+      this.setCurrentUser(decodedUser);
+    }
   }
 
-  getIsAuthenticated() {
+  getIsAuthenticated(): boolean {
     return this.isAuthenticated;
   }
 
-  setIsAuthenticated(authenticated) {
+  setIsAuthenticated(authenticated: boolean): void {
     this.isAuthenticated = authenticated;
   }
 
-  getAuthenticationListener() {
+  getAuthenticationListener(): Observable<boolean> {
     return this.authenticationListener.asObservable();
   }
 
-  setAuthenticationListener(authenticationListener) {
+  setAuthenticationListener(authenticationListener): void {
     this.authenticationListener.next(authenticationListener);
   }
 
-  getUserUsername() {
-    return this.userUsername;
+  getUserListener(): Observable<User> {
+    return this.userListener.asObservable();
   }
 
-  signup(signupPayload: SignupPayload) {
-    this.httpClient
-      .post(API_URL + '/signup', signupPayload)
-      .subscribe(
-        () => {
-          // TO-DO
-          this.router.navigate(['login']);
-        },
-        (err) => {
-          this.authenticationListener.next(false);
+  setUserListener(userListener): void {
+    this.userListener.next(userListener);
+  }
+
+  getCurrentUser(): User {
+    return this.currentUser;
+  }
+
+  signup(signupPayload: SignupPayload): void {
+    this.httpClient.post(API_URL + '/signup', signupPayload).subscribe(
+      () => {
+        this.router.navigate(['login']);
+      },
+      (err) => {
+        this.authenticationListener.next(false);
+      }
+    );
+  }
+
+  login(loginPayload: LoginPayload): void {
+    this.userService.login(loginPayload).subscribe(
+      (res) => {
+        const token = res.token;
+        if (token) {
+          const decodedUser = this.decodeUserFromToken(token);
+          decodedUser.subscribe(
+            (settedUser) => this.setCurrentUser(settedUser),
+            (err) => console.log(err)
+          );
+          const expiresInDuration = res.expiresIn;
+          this.setAuthenticationTimer(expiresInDuration);
+          this.isAuthenticated = true;
+          this.authenticationListener.next(true);
+          this.userListener.next(this.currentUser);
+          const now = new Date();
+          const expirationDate = new Date(
+            now.getTime() + expiresInDuration * 1000
+          );
+          this.saveAuthenticationData(token, expirationDate, res.userId);
+          this.router.navigate(['/']);
         }
-      );
+      },
+      (error) => this.authenticationListener.next(false)
+    );
   }
 
-  login(loginPayload: LoginPayload) {
-    this.httpClient
-      .post<{
-        token: string;
-        expiresIn: number;
-        userId: string;
-        userUsername: string;
-      }>(API_URL + '/login', loginPayload)
-      .subscribe(
-        (res) => {
-          const token = res.token;
-          this.token = token;
-          if (token) {
-            // const decodedUser = this.decodeUserFromToken(token);
-            // this.setCurrentUser(decodedUser);
-            const expiresInDuration = res.expiresIn;
-            this.setAuthenticationTimer(expiresInDuration);
-            this.isAuthenticated = true;
-            this.userId = res.userId;
-            this.userUsername = res.userUsername;
-            this.authenticationListener.next(true);
-            const now = new Date();
-            const expirationDate = new Date(
-              now.getTime() + expiresInDuration * 1000
-            );
-            this.saveAuthenticationData(token, expirationDate, this.userId);
-            this.router.navigate(['/']);
-          }
-        },
-        (err) => {
-          this.authenticationListener.next(false);
-        }
-      );
-  }
-
-  autoAuthentication() {
+  autoAuthentication(): void {
     const authInformation = this.getAuthenticationData();
     if (!authInformation) {
       return;
@@ -140,16 +132,14 @@ export class AuthenticationService {
     const now = new Date();
     const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
     if (expiresIn > 0) {
-      this.token = authInformation.token;
       this.isAuthenticated = true;
-      this.userId = authInformation.userId;
-      this.setAuthenticationTimer(expiresIn / 1000);
       this.authenticationListener.next(true);
+      this.setAuthenticationTimer(expiresIn / 1000);
+      this.userListener.next(this.currentUser);
     }
   }
 
-  logout() {
-    this.token = null;
+  logout(): void {
     this.isAuthenticated = false;
     this.authenticationListener.next(false);
     clearTimeout(this.tokenTimer);
@@ -161,19 +151,19 @@ export class AuthenticationService {
     token: string,
     expirationDate: Date,
     userId: string
-  ) {
+  ): void {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
     localStorage.setItem('userId', userId);
   }
 
-  private clearAuthenticationData() {
+  private clearAuthenticationData(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
     localStorage.removeItem('userId');
   }
 
-  private getAuthenticationData() {
+  private getAuthenticationData(): any {
     const token = localStorage.getItem('token');
     const expirationDate = localStorage.getItem('expiration');
     const userId = localStorage.getItem('userId');
@@ -195,7 +185,7 @@ export class AuthenticationService {
     }, duration * 1000);
   }
 
-  private getUserIdFromToken(token): String {
+  private getUserIdFromToken(token): string {
     const dataDecoded = this.jwtHelperService.decodeToken(token);
 
     if (dataDecoded) {
@@ -205,15 +195,15 @@ export class AuthenticationService {
     return null;
   }
 
-  // decodeUserFromToken(token): object {
-  //   const _id = this.getUserIdFromToken(token);
+  decodeUserFromToken(token: string): Observable<User> {
+    const userId = this.getUserIdFromToken(token);
 
-  //   if (_id) {
-  //     this.userService.getUser(_id);
-  //   }
+    if (userId) {
+      return this.userService.getUser(userId);
+    }
 
-  //   return null;
-  // }
+    return null;
+  }
 
   setCurrentUser(decodedUser): void {
     this.isAuthenticated = true;
@@ -222,7 +212,6 @@ export class AuthenticationService {
     this.currentUser.firstName = decodedUser.firstName;
     this.currentUser.lastName = decodedUser.lastName;
     this.currentUser.email = decodedUser.email;
-    this.currentUser.username = decodedUser.username;
     this.currentUser.birthday = decodedUser.birthday;
   }
 }

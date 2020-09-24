@@ -8,9 +8,9 @@ function setRoutes(app): void {
   const userController = new UserController();
 
   // Users
-  router.post('/signup', userController.signup);
-  router.post('/login', userController.login);
-  // router.get('/:id', userController.getUserProfile);
+  router.route('/signup').post(userController.signup);
+  router.route('/login').post(userController.login);
+  router.route('/user/:id').get(userController.get);
 
   app.use('/api', router);
 }

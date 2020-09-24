@@ -8,8 +8,8 @@ passport.use(new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password'
 },
-  function(email, password, done) {
-    User.findOne({ email: email }, (err, user) => {
+  (email, password, done) => {
+    User.findOne({ email }, (err, user) => {
       if (err) { return done(err); }
 
       if (!user) {

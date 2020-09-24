@@ -3,14 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { User } from './../models/user.model';
+import { LoginPayload } from './authentication.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  constructor(private httpClient: HttpClient) {}
 
-  getUser(user: User): Observable<User> {
-    return this.http.get<User>(`/api/user/${user._id}`);
+  getUser(_id: string): Observable<User> {
+    return this.httpClient.get<User>(`/api/user/${_id}`);
+  }
+
+  login(loginPayload: LoginPayload): Observable<any> {
+    return this.httpClient.post('/api/login', loginPayload);
   }
 }

@@ -47,12 +47,9 @@ userSchema.methods.validPassword = function(password: crypto.BinaryLike): boolea
   return this.hash === hash;
 };
 
-userSchema.methods.generateJwt = () => {
-  const expiryDate = new Date();
-  expiryDate.setDate(expiryDate.getDate() + 7);
-
+userSchema.methods.generateJwt = function() {
   return jsonwebtoken.sign({ _id: this._id }, process.env.SECRET, {
-    expiresIn: '1h',
+    expiresIn: 3600,
   });
 };
 
