@@ -23,21 +23,5 @@ export class ProfileComponent implements OnInit {
 
   message: string;
 
-  ngOnInit(): void {
-    this.httpClient.get<any>('api/profile').subscribe(
-      (res) => {
-        if (res) {
-          this.message = res.msg;
-        }
-      },
-
-      (err) => {
-        if (err.status === 401) {
-          this.message = 'Not authorized';
-        }
-
-        console.log(err);
-      }
-    );
-  }
+  ngOnInit(): void {}
 }
