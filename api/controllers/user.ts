@@ -8,6 +8,8 @@ class UserController extends BaseController {
   model = User;
 
   signup = (req, res) => {
+    const error500 = 500;
+
     const user = new this.model({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -24,12 +26,16 @@ class UserController extends BaseController {
       .then(() => {
         res.status(201).json({
           success: true,
-          message: 'User created.',
+          message: 'User created',
         });
       })
       .catch((err) => {
-        res.status(500).json({
-          message: 'Invalid authentication credentials.',
+        return res.status(error500).json({
+          success: false,
+          error: {
+            code: error500,
+            message: 'Invalid authentication credentials.',
+          },
         });
       });
   }

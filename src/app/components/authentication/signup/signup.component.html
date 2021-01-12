@@ -1,41 +1,90 @@
-<mat-card>
-  <mat-card-title-group>
-    <mat-card-title>Sign up</mat-card-title>
-  </mat-card-title-group>
-  <!-- <mat-spinner *ngIf="isLoading"></mat-spinner> -->
-  <form (submit)="onSignup(signupForm)" #signupForm="ngForm">
-    <mat-form-field>
-      <input matInput name="firstName" ngModel type="text" placeholder="First Name" #firstNameInput="ngModel" required>
-      <mat-error *ngIf="firstNameInput.invalid">Please enter a valid first name.</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput name="lastName" ngModel type="text" placeholder="Last Name" #lastNameInput="ngModel" required>
-      <mat-error *ngIf="lastNameInput.invalid">Please enter a valid last name.</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput name="email" ngModel type="email" placeholder="E-mail" #emailInput="ngModel" required email>
-      <mat-error *ngIf="emailInput.invalid">Please enter a valid email.</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="password" name="password" ngModel matInput placeholder="Password" #passwordInput="ngModel" required password>
-      <mat-error *ngIf="passwordInput.invalid">Please enter a valid password.</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <span matPrefix>@ &nbsp;</span>
-      <input matInput name="username" ngModel type="text" placeholder="Username" #usernameInput="ngModel" required>
-      <mat-error *ngIf="usernameInput.invalid">Please enter a valid last name.</mat-error>
-    </mat-form-field>
-    <label>Gender:</label>
-    <mat-radio-group name="gender" aria-label="Select an option" ngModel required>
-      <mat-radio-button value="1">Male</mat-radio-button>
-      <mat-radio-button value="2">Female</mat-radio-button>
-    </mat-radio-group>
-    <mat-form-field appearance="fill">
-      <mat-label>Date of birth</mat-label>
-      <input matInput [matDatepicker]="picker" name="birthday" ngModel required>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker startView="multi-year"></mat-datepicker>
-    </mat-form-field>
-    <mat-card-actions><button mat-raised-button color="accent" type="submit">Sign up</button></mat-card-actions>
-  </form>
-</mat-card>
+<h1>Signup</h1>
+<form (submit)="onSignup(signupForm)" #signupForm="ngForm">
+  <mat-vertical-stepper linear #stepper>
+    <mat-step [completed]="firstNameInput.valid && lastNameInput.valid">
+      <ng-template matStepLabel>My name is</ng-template>
+      <mat-form-field>
+        <mat-label>First Name</mat-label>
+        <input matInput name="firstName" ngModel type="text" placeholder="First Name" #firstNameInput="ngModel" required>
+        <mat-error *ngIf="firstNameInput.invalid">Please enter a valid first name.</mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input matInput name="lastName" ngModel type="text" placeholder="Last Name" #lastNameInput="ngModel" required>
+        <mat-error *ngIf="lastNameInput.invalid">Please enter a valid last name.</mat-error>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext type="button">Next</button>
+      </div>
+    </mat-step>
+    <mat-step [completed]="emailInput.valid">
+      <ng-template matStepLabel>My e-mail is</ng-template>
+      <mat-form-field>
+        <input matInput name="email" ngModel type="email" placeholder="E-mail" #emailInput="ngModel" required email>
+        <mat-error *ngIf="emailInput.invalid">Please enter a valid email.</mat-error>
+      </mat-form-field>
+      <div class="stepper-button">
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button mat-button matStepperNext type="button">Next</button>
+      </div>
+    </mat-step>
+    <mat-step [completed]="passwordInput.valid">
+      <ng-template matStepLabel>Choose your password</ng-template>
+      <mat-form-field>
+        <input matInput type="password" name="password" ngModel matInput placeholder="Password" #passwordInput="ngModel" required password>
+        <mat-error *ngIf="passwordInput.invalid">Please enter a valid password.</mat-error>
+      </mat-form-field>
+      <!-- TODO: Aggiungere secondo input per conferma password -->
+      <div class="stepper-button">
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button mat-button matStepperNext type="button">Next</button>
+      </div>
+    </mat-step>
+    <mat-step [completed]="usernameInput.valid">
+      <ng-template matStepLabel>My username is</ng-template>
+      <mat-form-field>
+        <span matPrefix>@ &nbsp;</span>
+        <input matInput name="username" ngModel type="text" placeholder="Username" #usernameInput="ngModel" required>
+        <mat-error *ngIf="usernameInput.invalid">Please enter a valid last name.</mat-error>
+      </mat-form-field>
+      <div class="stepper-button">
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button mat-button matStepperNext type="button">Next</button>
+      </div>
+    </mat-step>
+    <mat-step [completed]="genderMaleInput.checked || genderFemaleInput.checked">
+      <ng-template matStepLabel>My gender is</ng-template>
+      <mat-radio-group name="gender" aria-label="Select an option" required ngModel>
+        <mat-radio-button value="1" #genderMaleInput>Male</mat-radio-button>
+        <mat-radio-button value="2" #genderFemaleInput style="margin: 0 0 0 25px;">Female</mat-radio-button>
+      </mat-radio-group>
+      <div class="stepper-button">
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button mat-button matStepperNext type="button">Next</button>
+      </div>
+    </mat-step>
+    <mat-step [completed]="datePicker.valid">
+      <ng-template matStepLabel>My birthday is</ng-template>
+      <mat-form-field appearance="fill">
+        <mat-label>Date of birth</mat-label>
+        <input matInput #datePicker="ngModel" [matDatepicker]="picker" name="birthday" ngModel required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker startView="multi-year"></mat-datepicker>
+        <mat-error>Your date of birth is required</mat-error>
+      </mat-form-field>
+      <div class="stepper-button">
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button mat-button matStepperNext type="button">Next</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done!</ng-template>
+      <div>
+        <button mat-button type="button" matStepperPrevious>Back</button>
+        <!-- TODO: Reset button not working cleaning form data -->
+        <button mat-button type="button" (click)="signupForm.reset(); stepper.reset()">Reset</button>
+        <button mat-flat-button color="accent" type="submit">Sign up</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</form>

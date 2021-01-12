@@ -105,10 +105,14 @@ export class AuthenticationService {
 
   signup(signupPayload: SignupPayload): void {
     this.httpClient.post(API_URL + '/signup', signupPayload).subscribe(
-      () => {
+      (res:any) => {
+        this.notifierService.add(res.message);
+
         this.router.navigate(['login']);
       },
       (err) => {
+        this.notifierService.add(err.error.error.message);
+
         this.authenticationListener.next(false);
       }
     );
@@ -150,7 +154,7 @@ export class AuthenticationService {
 
               this.notifierService.add(res.message);
 
-              this.router.navigate(['profile']);
+              this.router.navigate(['home']);
             }
           }
         },
@@ -163,7 +167,7 @@ export class AuthenticationService {
       );
   }
 
-  // TODO Togliere utilizzo expireIn
+  // TODO: Togliere utilizzo expireIn
   autoAuthentication(): void {
     const authenticationData = this.getAuthenticationData();
     if (!authenticationData) {
@@ -205,7 +209,7 @@ export class AuthenticationService {
     localStorage.removeItem(this.expirationString);
   }
 
-  // TODO Togliere campo expirationDate
+  // TODO: Togliere campo expirationDate
   private getAuthenticationData(): LocalStorage {
     const token = this.getLocalStorageFieldValue(this.tokenString);
     const expirationDate = this.getLocalStorageFieldValue(
