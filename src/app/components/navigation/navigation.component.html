@@ -1,0 +1,38 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink='/'>Home</a>
+      <a mat-list-item routerLink='/profile/' *ngIf="userIsAuthenticated">Profile</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Affittagram</span>
+      <span class="spacer"></span>
+      <ul>
+        <li *ngIf="!userIsAuthenticated">
+          <a mat-button routerLink="/login" routerLinkActive="mat-accent">Login</a>
+        </li>
+        <li *ngIf="!userIsAuthenticated">
+          <a mat-button routerLink="/signup" routerLinkActive="mat-accent">Signup</a>
+        </li>
+        <li *ngIf="userIsAuthenticated">
+          <a mat-button routerLink="/logout" routerLinkActive="mat-accent">Logout</a>
+        </li>
+      </ul>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

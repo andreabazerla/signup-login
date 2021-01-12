@@ -7,16 +7,19 @@ import * as path from 'path';
 import * as passport from 'passport';
 import * as morgan from 'morgan';
 import * as debug from 'debug';
+import * as cors from 'cors';
 
 // Configurations
 import setDb from './db';
-import './configuration/passport';
+import setPassport from './config/passport';
 import setRoutes, * as routes from './routes/routes';
 
 const app = express();
 
+// Gives access to variables set in the .env file via `process.env.VARIABLE_NAME` syntax
 dotenv.config();
 
+// Built-in function in Express that parses incoming requests with JSON and strings or arrays payloads
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -25,8 +28,13 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
 }
 
+setPassport(passport);
+
 // Passport.js
 app.use(passport.initialize());
+
+// CORS allow Angular HTTP requests to Express
+app.use(cors());
 
 // Static files
 app.use(express.static(path.join(__dirname, '../client/')));
@@ -73,9 +81,11 @@ const onListening = () => {
   debug('Listening on ' + bind);
 };
 
+// Set server Port after normalization
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
+// Create an HTTP server
 const server = http.createServer(app);
 
 server.on('error', onError);
@@ -90,6 +100,7 @@ async function init(): Promise<any> {
       res.send(path.join(__dirname, '../client/index.html'));
     });
 
+    // Let the server listen at specified previously port
     server.listen(port);
   } catch (err) {
     console.error(err);

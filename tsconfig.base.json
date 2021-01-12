@@ -19,9 +19,10 @@
       "es2018",
       "dom"
     ] /* Specify library files to be included in the compilation. */
+  },
+  "angularCompilerOptions": {
+    "debug": true
+    // "strictInjectionParameters": true,
+    // "strictTemplates": true
   }
-  // "angularCompilerOptions": {
-  //   "strictInjectionParameters": true,
-  //   "strictTemplates": true
-  // }
 }

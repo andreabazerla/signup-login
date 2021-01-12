@@ -16,5 +16,14 @@
     {
       "path": "./e2e/tsconfig.json"
     }
-]
+  ],
+  // TODO: resolve path aliases bug.
+  // "paths": {
+  //   "@app*": ["src/app/*"],
+  //   "@components*": ["src/app/components/*"],
+  //   "@services*": ["src/app/services/*"],
+  //   "@models*": ["src/app/models/*"],
+  //   "@material*": ["src/app/material/*"],
+  //   "@environments*": ["src/environments/*"]
+  // }
 }

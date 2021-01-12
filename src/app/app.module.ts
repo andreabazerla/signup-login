@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { NgModule, ErrorHandler } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,14 +11,25 @@ import { AngularMaterialModule } from './material/angular-material.module';
 
 // Components
 import { AppComponent } from './app.component';
-import { NavigationComponent } from './navigation/navigation.component';
-import { HomeComponent } from './home/home.component';
-import { ProfileComponent } from './user/profile/profile.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { HomeComponent } from './components/home/home.component';
+import { ProfileComponent } from './components/user/profile/profile.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+
+// Interceptors
+import { AuthorizationInterceptor } from './interceptors/authorization/authorization.interceptor';
+import { ErrorInterceptor } from './../../src/app/interceptors/error.interceptor';
 
 // Services
-import { AuthenticationService } from './services/authentication.service';
-import { UserService } from './services/user.service';
+import { GlobalsService } from './services/globals/globals.service';
+import { LoggingService } from './services/logging/logging.service';
+import { NotifierService } from './services/notifier/notifier.service';
+import { AuthenticationService } from './services/authentication/authentication.service';
+import { UserService } from './services/user/user.service';
+import { ErrorService } from './services/error/error.service';
+
+// Handlers
+import { ErrorsHandler } from './handlers/error.handler.';
 
 export function tokenGetter(): string {
   return localStorage.getItem('token');
@@ -30,7 +41,7 @@ export function tokenGetter(): string {
     NavigationComponent,
     HomeComponent,
     ProfileComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,11 +52,24 @@ export function tokenGetter(): string {
     JwtModule.forRoot({
       config: {
         tokenGetter,
-        allowedDomains: ['localhost:3000', 'localhost:4200'],
-      }
-    })
+      },
+    }),
   ],
-  providers: [AuthenticationService, UserService],
-  bootstrap: [AppComponent]
+  providers: [
+    AuthenticationService,
+    UserService,
+    GlobalsService,
+    ErrorService,
+    NotifierService,
+    LoggingService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizationInterceptor,
+      multi: true,
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: ErrorHandler, useClass: ErrorsHandler },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

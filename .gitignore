@@ -49,3 +49,6 @@ Thumbs.db
 
 # Environment variables files
 .env
+
+# RSA Private Key
+id_rsa_priv.pem

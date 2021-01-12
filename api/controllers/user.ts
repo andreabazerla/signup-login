@@ -2,13 +2,13 @@ import BaseController from './base';
 import * as passport from 'passport';
 
 import User from '../models/user';
+import { IUser } from './../models/user';
 
 class UserController extends BaseController {
   model = User;
 
   signup = (req, res) => {
-
-    const user = new User({
+    const user = new this.model({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
@@ -17,18 +17,17 @@ class UserController extends BaseController {
       birthday: req.body.birthday,
     });
 
-    user.setPassword(req.body.password);
+    user.setPassword(user, req.body.password);
 
     user
       .save()
-      .then((result) => {
-        res.status(201);
-        res.json({
+      .then(() => {
+        res.status(201).json({
+          success: true,
           message: 'User created.',
         });
       })
       .catch((err) => {
-        console.log(err);
         res.status(500).json({
           message: 'Invalid authentication credentials.',
         });
@@ -36,25 +35,50 @@ class UserController extends BaseController {
   }
 
   login = (req, res) => {
-    passport.authenticate('local', (err, user, info) => {
-      let token: string;
-      if (err) {
-        res.status(404).json(err);
-        return;
-      }
+    const error401 = 401;
+    const error201 = 201;
 
-      if (user) {
-        token = user.generateJwt();
-        res.status(201);
-        res.json({
-          token,
-          expiresIn: 3600,
-          userId: user._id
+    this.model
+      .findOne({ email: req.body.email })
+      .then((user: IUser) => {
+        if (!user) {
+          return res.status(error401).json({
+            success: false,
+            error: {
+              code: error401,
+              message: 'User unknown',
+            },
+          });
+        }
+
+        const isValid = user.checkPassword(user, req.body.password);
+        if (!isValid) {
+          return res.status(error401).json({
+            success: false,
+            error: {
+              code: error401,
+              message: 'Wrong password',
+            },
+          });
+        }
+
+        const tokenObject = user.generateJwt(user);
+
+        return res.status(error201).json({
+          success: true,
+          message: 'Login successful',
+          token: tokenObject.token,
+          expiresIn: tokenObject.expiresIn,
         });
-      } else {
-        res.status(401).json(info);
-      }
-    })(req, res);
+      })
+      .catch((err) => console.error(err));
+  }
+
+  profile = (req, res) => {
+    res.status(200).json({
+      success: true,
+      message: 'Successfully authenticated',
+    });
   }
 }
 
