@@ -17,6 +17,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatStepperModule } from '@angular/material/stepper';
 
 const modules = [
   LayoutModule,
@@ -33,7 +34,8 @@ const modules = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatTabsModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatStepperModule
 ];
 
 @NgModule({
