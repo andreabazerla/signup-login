@@ -13,7 +13,6 @@ import { User } from './../../../models/user.model';
 })
 export class ProfileComponent implements OnInit {
   user: User;
-  // isLoading = true;
 
   constructor(
     private httpClient: HttpClient,

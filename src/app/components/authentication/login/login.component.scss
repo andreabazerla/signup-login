@@ -1,11 +1,10 @@
-mat-card {
-  margin: auto;
+form {
+  width: fit-content;
+  margin: 0 auto;
 }
 
-mat-form-field {
-  width: 100%;
-}
-
-mat-spinner {
-  margin: auto;
+#login-button {
+  position: relative;
+  margin: 15px auto;
+  display: block;
 }

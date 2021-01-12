@@ -1,17 +1,18 @@
-<mat-card>
-  <!-- <mat-spinner *ngIf="isLoading"></mat-spinner> -->
-  <mat-card-title-group>
-    <mat-card-title>Login</mat-card-title>
-  </mat-card-title-group>
+<h1>Login</h1>
+<div id="form">
   <form (submit)="onLogin(loginForm)" #loginForm="ngForm">
     <mat-form-field>
+      <mat-label>E-mail</mat-label>
       <input matInput name="email" ngModel type="email" placeholder="E-mail" #emailInput="ngModel" required email>
       <mat-error *ngIf="emailInput.invalid">Please enter a valid email.</mat-error>
     </mat-form-field>
+    <br>
     <mat-form-field>
+      <mat-label>Password</mat-label>
       <input matInput type="password" name="password" ngModel matInput placeholder="Password" #passwordInput="ngModel" required>
       <mat-error *ngIf="passwordInput.invalid">Please enter a valid password.</mat-error>
     </mat-form-field>
-    <button mat-raised-button color="accent" type="submit">Login</button>
+    <br>
+    <button mat-raised-button color="accent" type="submit" id="login-button">Login</button>
   </form>
-</mat-card>
+</div>

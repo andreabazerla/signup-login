@@ -4,8 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 // Components
 import { HomeComponent } from './components/home/home.component';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 // Guards
 import { ProfileGuard } from './guards/profile/profile.guard';
@@ -20,6 +20,7 @@ const routes: Routes = [
       ),
   },
   { path: 'profile', component: ProfileComponent, canActivate: [ProfileGuard] },
+  { path: 'home', component: HomeComponent },
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];

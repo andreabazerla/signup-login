@@ -11,18 +11,12 @@ import {
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  // isLoading = false;
-
-  constructor(
-    public authenticationService: AuthenticationService
-  ) {}
+  constructor(public authenticationService: AuthenticationService) {}
 
   onLogin(form: NgForm): void {
     if (form.invalid) {
       return;
     }
-
-    // this.isLoading = true;
 
     const email = form.value.email;
     const password = form.value.password;

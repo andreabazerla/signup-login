@@ -14,7 +14,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit, OnDestroy {
-  // isLoading = true;
   userIsAuthenticated = false;
   user: User;
 
