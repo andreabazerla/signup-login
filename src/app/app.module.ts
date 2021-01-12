@@ -18,7 +18,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 
 // Interceptors
 import { AuthorizationInterceptor } from './interceptors/authorization/authorization.interceptor';
-import { ErrorInterceptor } from './../../src/app/interceptors/error.interceptor';
+import { ErrorInterceptor } from './interceptors/error/error.interceptor';
 
 // Services
 import { GlobalsService } from './services/globals/globals.service';

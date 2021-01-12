@@ -175,8 +175,7 @@ export class AuthenticationService {
       this.authenticationListener.next(true);
       this.userListener.next(this.currentUser);
 
-      const expiresIn =
-        authenticationData.expirationDate.diffNow().valueOf() / 1000;
+      const expiresIn = authenticationData.expirationDate.diffNow().valueOf() / 1000;
       this.setAuthenticationTimer(expiresIn);
     }
   }

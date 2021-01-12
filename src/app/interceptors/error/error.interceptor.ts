@@ -21,6 +21,10 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (error.status) {
           console.log(error);
         }
+
+        if (error.status === 401) {
+          // TODO Refresh toke?
+        }
         return throwError(error);
       })
     );
