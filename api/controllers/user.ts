@@ -1,6 +1,4 @@
 import BaseController from './base';
-import * as passport from 'passport';
-
 import User from '../models/user';
 import { IUser } from './../models/user';
 

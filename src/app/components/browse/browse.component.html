@@ -1,0 +1,16 @@
+<h1>Browse</h1>
+
+<mat-tab-group mat-align-tabs="center" animationDuration="0ms">
+  <mat-tab label="List">
+    <div class="rooms">
+      <div *ngFor="let room of rooms">
+        <a routerLink="/room/{{ room._id }}">
+          {{ room.price }}
+        </a>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Map">
+    <ng-template matTabContent> </ng-template>
+  </mat-tab>
+</mat-tab-group>

@@ -5,8 +5,9 @@ import { map, shareReplay } from 'rxjs/operators';
 
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { UserService } from '../../services/user/user.service';
-import { User } from './../../models/user.model';
+import { User } from '../../models/user/user.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-navigation',
@@ -17,13 +18,12 @@ export class NavigationComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   user: User;
 
-  private authenticationSubscription: Subscription;
+  private authenticationSubscription$: Subscription;
   private userSubscription: Subscription;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
     public authenticationService: AuthenticationService,
-    private userService: UserService,
     public matSnackBar: MatSnackBar
   ) {}
 
@@ -36,30 +36,24 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userIsAuthenticated = this.authenticationService.getIsAuthenticated();
-    this.authenticationSubscription = this.authenticationService
+    this.authenticationSubscription$ = this.authenticationService
       .getAuthenticationListener()
       .subscribe((isAuthenticated) => {
         this.userIsAuthenticated = isAuthenticated;
       });
-
-    // this.user = this.authenticationService.getCurrentUser();
-    // this.userSubscription = this.authenticationService
-    //   .getUserListener()
-    //   .subscribe((user) => {
-    //     if (this.userIsAuthenticated) {
-    //       this.user = user;
-    //     }
-    //   });
   }
 
-  openSnackBar(message: string, action: string): void {
-    this.matSnackBar.open(message, action, {
-      duration: 2000,
-    });
+  toggle(matSidenav: MatSidenav) {
+    const isSmallScreen = this.breakpointObserver.isMatched(
+      '(max-width: 599px)'
+    );
+    if (isSmallScreen) {
+      matSidenav.toggle();
+    }
   }
 
   ngOnDestroy(): void {
-    this.authenticationSubscription.unsubscribe();
+    this.authenticationSubscription$.unsubscribe();
     this.userSubscription.unsubscribe();
   }
 }

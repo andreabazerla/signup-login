@@ -7,6 +7,8 @@ import * as fs from 'fs';
 // Luxon
 import { DateTime } from 'luxon';
 
+import { Gender } from './../../src/app/enums/gender.enum';
+
 const pathToKey = path.resolve(__dirname, './../keys/id_rsa_priv.pem');
 const PRIVATE_KEY = fs.readFileSync(pathToKey, 'utf8');
 
@@ -40,6 +42,7 @@ const UserSchema: mongoose.Schema = new mongoose.Schema({
   },
   gender: {
     type: Number,
+    // TODO: Creare nuovo enum per il dato gender.
     enum: [0, 1],
     default: 0,
     required: true,
@@ -49,12 +52,6 @@ const UserSchema: mongoose.Schema = new mongoose.Schema({
     required: true,
   },
 });
-
-enum Gender {
-  Male = 1,
-  Female = 0,
-}
-
 export interface IUser extends mongoose.Document {
   firstName: string;
   lastName: string;

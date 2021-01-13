@@ -4,8 +4,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class GlobalsService {
-  readonly token: string = 'token';
-  readonly expiration: string = 'expiration';
+
+  readonly API_URL: string = '/api';
+
+  readonly TOKEN: string = 'token';
+  readonly EXPIRATION: string = 'expiration';
 
   constructor() {}
 }

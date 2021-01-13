@@ -3,13 +3,13 @@
   <form (submit)="onLogin(loginForm)" #loginForm="ngForm">
     <mat-form-field>
       <mat-label>E-mail</mat-label>
-      <input matInput name="email" ngModel type="email" placeholder="E-mail" #emailInput="ngModel" required email>
+      <input matInput name="email" ngModel type="email" #emailInput="ngModel" required email>
       <mat-error *ngIf="emailInput.invalid">Please enter a valid email.</mat-error>
     </mat-form-field>
     <br>
     <mat-form-field>
       <mat-label>Password</mat-label>
-      <input matInput type="password" name="password" ngModel matInput placeholder="Password" #passwordInput="ngModel" required>
+      <input matInput type="password" name="password" ngModel matInput #passwordInput="ngModel" required>
       <mat-error *ngIf="passwordInput.invalid">Please enter a valid password.</mat-error>
     </mat-form-field>
     <br>

@@ -22,14 +22,16 @@ import { ErrorInterceptor } from './interceptors/error/error.interceptor';
 
 // Services
 import { GlobalsService } from './services/globals/globals.service';
-import { LoggingService } from './services/logging/logging.service';
-import { NotifierService } from './services/notifier/notifier.service';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { UserService } from './services/user/user.service';
+import { RoomsService } from './services/rooms/rooms.service';
+import { NotifierService } from './services/notifier/notifier.service';
 import { ErrorService } from './services/error/error.service';
+import { LoggingService } from './services/logging/logging.service';
 
 // Handlers
 import { ErrorsHandler } from './handlers/error.handler.';
+import { BrowseComponent } from './components/browse/browse.component';
 
 export function tokenGetter(): string {
   return localStorage.getItem('token');
@@ -42,6 +44,7 @@ export function tokenGetter(): string {
     HomeComponent,
     ProfileComponent,
     PageNotFoundComponent,
+    BrowseComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,11 +59,12 @@ export function tokenGetter(): string {
     }),
   ],
   providers: [
+    GlobalsService,
     AuthenticationService,
     UserService,
-    GlobalsService,
-    ErrorService,
+    RoomsService,
     NotifierService,
+    ErrorService,
     LoggingService,
     {
       provide: HTTP_INTERCEPTORS,

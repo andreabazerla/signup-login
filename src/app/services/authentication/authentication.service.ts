@@ -10,7 +10,7 @@ import { Observable, Subject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 // Models
-import { User } from '../../models/user.model';
+import { User } from '../../models/user/user.model';
 
 // Services
 import { UserService } from '../user/user.service';
@@ -19,9 +19,6 @@ import { GlobalsService } from './../globals/globals.service';
 
 // Luxon
 import { DateTime } from 'luxon';
-
-// Costants
-const API_URL = '/api';
 
 // Interfaces
 export interface SignupPayload {
@@ -54,8 +51,9 @@ export class AuthenticationService {
   private authenticationListener = new Subject<boolean>();
   private userListener = new Subject<User>();
 
-  private tokenString: string;
-  private expirationString: string;
+  private API_URL: string;
+  private TOKEN: string;
+  private EXPIRATION: string;
 
   constructor(
     private httpClient: HttpClient,
@@ -65,10 +63,11 @@ export class AuthenticationService {
     private notifierService: NotifierService,
     private globalsService: GlobalsService
   ) {
-    this.tokenString = globalsService.token;
-    this.expirationString = globalsService.expiration;
+    this.API_URL = globalsService.API_URL;
+    this.TOKEN = globalsService.TOKEN;
+    this.EXPIRATION = globalsService.EXPIRATION;
 
-    const token = localStorage.getItem(this.tokenString);
+    const token = localStorage.getItem(this.TOKEN);
     if (token) {
       const decodedUser = this.decodeUserFromToken(token);
       decodedUser.subscribe((settedUser) => this.setCurrentUser(settedUser));
@@ -104,8 +103,8 @@ export class AuthenticationService {
   }
 
   signup(signupPayload: SignupPayload): void {
-    this.httpClient.post(API_URL + '/signup', signupPayload).subscribe(
-      (res:any) => {
+    this.httpClient.post(this.API_URL + '/signup', signupPayload).subscribe(
+      (res: any) => {
         this.notifierService.add(res.message);
 
         this.router.navigate(['login']);
@@ -197,23 +196,23 @@ export class AuthenticationService {
   }
 
   private saveAuthenticationData(localStorageCustom: LocalStorage): void {
-    localStorage.setItem(this.tokenString, localStorageCustom.token);
+    localStorage.setItem(this.TOKEN, localStorageCustom.token);
     localStorage.setItem(
-      this.expirationString,
+      this.EXPIRATION,
       localStorageCustom.expirationDate.valueOf()
     );
   }
 
   private clearAuthenticationData(): void {
-    localStorage.removeItem(this.tokenString);
-    localStorage.removeItem(this.expirationString);
+    localStorage.removeItem(this.TOKEN);
+    localStorage.removeItem(this.EXPIRATION);
   }
 
   // TODO: Togliere campo expirationDate
   private getAuthenticationData(): LocalStorage {
-    const token = this.getLocalStorageFieldValue(this.tokenString);
+    const token = this.getLocalStorageFieldValue(this.TOKEN);
     const expirationDate = this.getLocalStorageFieldValue(
-      this.expirationString
+      this.EXPIRATION
     );
 
     let expirationDateNumber: number;
@@ -273,7 +272,7 @@ export class AuthenticationService {
   }
 
   public getBearerToken(): string {
-    return this.getLocalStorageFieldValue(this.tokenString);
+    return this.getLocalStorageFieldValue(this.TOKEN);
   }
 
   public isLogged(): boolean {
