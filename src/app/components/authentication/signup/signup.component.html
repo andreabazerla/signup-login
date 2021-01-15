@@ -5,12 +5,13 @@
       <ng-template matStepLabel>My name is</ng-template>
       <mat-form-field>
         <mat-label>First Name</mat-label>
-        <input matInput name="firstName" ngModel type="text" placeholder="First Name" #firstNameInput="ngModel" required>
+        <input matInput name="firstName" ngModel type="text" #firstNameInput="ngModel" required>
         <mat-error *ngIf="firstNameInput.invalid">Please enter a valid first name.</mat-error>
       </mat-form-field>
       <br>
       <mat-form-field>
-        <input matInput name="lastName" ngModel type="text" placeholder="Last Name" #lastNameInput="ngModel" required>
+        <mat-label>Last Name</mat-label>
+        <input matInput name="lastName" ngModel type="text" #lastNameInput="ngModel" required>
         <mat-error *ngIf="lastNameInput.invalid">Please enter a valid last name.</mat-error>
       </mat-form-field>
       <div>
@@ -20,7 +21,8 @@
     <mat-step [completed]="emailInput.valid">
       <ng-template matStepLabel>My e-mail is</ng-template>
       <mat-form-field>
-        <input matInput name="email" ngModel type="email" placeholder="E-mail" #emailInput="ngModel" required email>
+        <mat-label>E-mail</mat-label>
+        <input matInput name="email" ngModel type="email" #emailInput="ngModel" required email>
         <mat-error *ngIf="emailInput.invalid">Please enter a valid email.</mat-error>
       </mat-form-field>
       <div class="stepper-button">
@@ -31,7 +33,8 @@
     <mat-step [completed]="passwordInput.valid">
       <ng-template matStepLabel>Choose your password</ng-template>
       <mat-form-field>
-        <input matInput type="password" name="password" ngModel matInput placeholder="Password" #passwordInput="ngModel" required password>
+        <mat-label>Password</mat-label>
+        <input matInput type="password" name="password" ngModel matInput #passwordInput="ngModel" required password>
         <mat-error *ngIf="passwordInput.invalid">Please enter a valid password.</mat-error>
       </mat-form-field>
       <!-- TODO: Aggiungere secondo input per conferma password -->
@@ -43,8 +46,9 @@
     <mat-step [completed]="usernameInput.valid">
       <ng-template matStepLabel>My username is</ng-template>
       <mat-form-field>
+        <mat-label>Username</mat-label>
         <span matPrefix>@ &nbsp;</span>
-        <input matInput name="username" ngModel type="text" placeholder="Username" #usernameInput="ngModel" required>
+        <input matInput name="username" ngModel type="text" #usernameInput="ngModel" required>
         <mat-error *ngIf="usernameInput.invalid">Please enter a valid last name.</mat-error>
       </mat-form-field>
       <div class="stepper-button">

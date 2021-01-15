@@ -1,4 +1,4 @@
-export enum RoomType {
+export enum Beds {
   Single,
   Double,
   Triple

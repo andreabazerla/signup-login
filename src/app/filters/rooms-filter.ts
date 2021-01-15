@@ -1,8 +1,8 @@
-import { RoomType } from '../enums/room-type.enum';
+import { Beds } from '../enums/room-type.enum';
 
 export interface RoomsFilter {
   minPrice: number;
   maxPrice: number;
-  type: RoomType;
+  type: Beds;
   window: boolean;
 }

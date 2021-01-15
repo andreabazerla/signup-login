@@ -8,10 +8,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Angular Material module
 import { AngularMaterialModule } from './material/angular-material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 // Components
 import { AppComponent } from './app.component';
-import { NavigationComponent } from './components/navigation/navigation.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
@@ -23,6 +24,7 @@ import { ErrorInterceptor } from './interceptors/error/error.interceptor';
 // Services
 import { GlobalsService } from './services/globals/globals.service';
 import { AuthenticationService } from './services/authentication/authentication.service';
+import { BrowseComponent } from './components/browse/browse.component';
 import { UserService } from './services/user/user.service';
 import { RoomsService } from './services/rooms/rooms.service';
 import { NotifierService } from './services/notifier/notifier.service';
@@ -31,7 +33,7 @@ import { LoggingService } from './services/logging/logging.service';
 
 // Handlers
 import { ErrorsHandler } from './handlers/error.handler.';
-import { BrowseComponent } from './components/browse/browse.component';
+import { FilterComponent } from './components/filter/filter.component';
 
 export function tokenGetter(): string {
   return localStorage.getItem('token');
@@ -40,11 +42,12 @@ export function tokenGetter(): string {
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationComponent,
+    SidenavComponent,
     HomeComponent,
     ProfileComponent,
     PageNotFoundComponent,
     BrowseComponent,
+    FilterComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,6 +55,7 @@ export function tokenGetter(): string {
     BrowserAnimationsModule,
     AngularMaterialModule,
     HttpClientModule,
+    FlexLayoutModule,
     JwtModule.forRoot({
       config: {
         tokenGetter,

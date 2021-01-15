@@ -3,3 +3,14 @@
   width: 50% !important;
   max-width: 200px !important;
 }
+
+.rooms {
+  padding: 15px;
+
+  .mat-card-room {
+
+    .room-price {
+      font-weight: bold;
+    }
+  }
+}

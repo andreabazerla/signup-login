@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-// Angular Material Navigation
+// Angular Material Sidenav
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';

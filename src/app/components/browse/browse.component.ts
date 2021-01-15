@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
 
+// Models
 import { Room } from './../../../../src/app/models/room/room';
 
+// Services
 import { RoomsService } from './../../services/rooms/rooms.service';
 
 @Component({

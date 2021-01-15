@@ -153,7 +153,7 @@ export class AuthenticationService {
 
               this.notifierService.add(res.message);
 
-              this.router.navigate(['home']);
+              this.router.navigate(['']);
             }
           }
         },

@@ -4,22 +4,20 @@ import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
 import { AuthenticationService } from '../../services/authentication/authentication.service';
-import { UserService } from '../../services/user/user.service';
 import { User } from '../../models/user/user.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
-  selector: 'app-navigation',
-  templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss'],
+  selector: 'app-sidenav',
+  templateUrl: './sidenav.component.html',
+  styleUrls: ['./sidenav.component.scss'],
 })
-export class NavigationComponent implements OnInit, OnDestroy {
+export class SidenavComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   user: User;
 
   private authenticationSubscription$: Subscription;
-  private userSubscription: Subscription;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -53,7 +51,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.authenticationSubscription$.unsubscribe();
-    this.userSubscription.unsubscribe();
+    if (this.authenticationSubscription$) {
+      this.authenticationSubscription$.unsubscribe();
+    }
   }
 }
