@@ -16,6 +16,8 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { FilterComponent } from './components/filter/filter.component';
 
 // Interceptors
 import { AuthorizationInterceptor } from './interceptors/authorization/authorization.interceptor';
@@ -33,7 +35,6 @@ import { LoggingService } from './services/logging/logging.service';
 
 // Handlers
 import { ErrorsHandler } from './handlers/error.handler.';
-import { FilterComponent } from './components/filter/filter.component';
 
 export function tokenGetter(): string {
   return localStorage.getItem('token');
@@ -48,6 +49,7 @@ export function tokenGetter(): string {
     PageNotFoundComponent,
     BrowseComponent,
     FilterComponent,
+    ToolbarComponent,
   ],
   imports: [
     BrowserModule,

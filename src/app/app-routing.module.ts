@@ -4,20 +4,22 @@ import { Routes, RouterModule } from '@angular/router';
 
 // Components
 import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { BrowseComponent } from './components/browse/browse.component';
+import { FilterComponent } from './components/filter/filter.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 // Guards
 import { ProfileGuard } from './guards/profile/profile.guard';
-import { FilterComponent } from './components/filter/filter.component';
 
 const routes: Routes = [
   {
     path: '',
     component: SidenavComponent,
     children: [
+      // { path: '', component: ToolbarComponent },
       { path: 'home', component: HomeComponent },
       { path: 'browse', component: BrowseComponent },
       {

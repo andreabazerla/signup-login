@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -17,7 +17,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   user: User;
 
-  private authenticationSubscription$: Subscription;
+  public authenticationSubscription$: Subscription;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
