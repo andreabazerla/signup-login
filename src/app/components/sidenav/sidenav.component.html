@@ -11,7 +11,7 @@
       </div>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content class="mat-sidenav-content">
     <app-toolbar [isHandset$]="isHandset$" [userIsAuthenticated]="userIsAuthenticated" (eventEmitter)="toggle(sidenav)"></app-toolbar>
     <div class="router-outlet">
       <router-outlet></router-outlet>
