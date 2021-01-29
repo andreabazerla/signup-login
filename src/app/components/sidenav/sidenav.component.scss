@@ -7,5 +7,16 @@
 
   .mat-sidenav-content {
     background-color: white;
+
+    .spacer {
+      flex: 1 1 auto;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+    }
   }
 }

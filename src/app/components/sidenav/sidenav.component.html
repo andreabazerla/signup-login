@@ -12,7 +12,35 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="mat-sidenav-content">
-    <app-toolbar [isHandset$]="isHandset$" [userIsAuthenticated]="userIsAuthenticated" (eventEmitter)="toggle(sidenav)"></app-toolbar>
+    <app-toolbar>
+      <div button-left>
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="toggle(sidenav)"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+      </div>
+      <div header-text>
+        <span>{{ title }}</span>
+      </div>
+      <span spacer class="spacer"></span>
+      <div button-right>
+        <ul>
+          <li *ngIf="!userIsAuthenticated">
+            <a mat-button routerLink="/login" routerLinkActive="mat-accent">Login</a>
+          </li>
+          <li *ngIf="!userIsAuthenticated">
+            <a mat-button routerLink="/signup" routerLinkActive="mat-accent">Signup</a>
+          </li>
+          <li *ngIf="userIsAuthenticated">
+            <a mat-button routerLink="/logout" routerLinkActive="mat-accent">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </app-toolbar>
     <div class="router-outlet">
       <router-outlet></router-outlet>
     </div>

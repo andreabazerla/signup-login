@@ -14,6 +14,7 @@ import { MatSidenav } from '@angular/material/sidenav';
   styleUrls: ['./sidenav.component.scss'],
 })
 export class SidenavComponent implements OnInit, OnDestroy {
+  title = 'Affittagram';
   userIsAuthenticated = false;
   user: User;
 

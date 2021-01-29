@@ -8,19 +8,9 @@ import { Observable } from 'rxjs';
 })
 export class ToolbarComponent implements OnInit {
 
-  @Input() isHandset$: Observable<boolean>;
-  @Input() userIsAuthenticated: boolean;
-  @Input() sidenav;
-
-  @Output() eventEmitter = new EventEmitter<boolean>();
-
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  toggle(value: boolean) {
-    this.eventEmitter.emit(value);
   }
 
 }
