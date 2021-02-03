@@ -1,1 +1,9 @@
-<h1>Home</h1>
+<div class="home-container">
+  <div fxLayout="column" fxLayoutGap="15px" class="actions-container">
+    <div *ngFor="let action of actions">
+      <mat-card [routerLink]='action.link' class="mat-card-action">
+        <mat-card-content>{{ action.text }}</mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

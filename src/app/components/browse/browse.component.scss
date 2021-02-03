@@ -45,20 +45,18 @@
     }
   }
 
-  .mat-drawer-content {
-    .mat-tab-group {
-      margin-top: 64px;
-      @media (max-width: 599px) {
-        margin-top: 56px;
-      }
+  .mat-tab-group {
+    margin-top: 64px;
+    @media (max-width: 599px) {
+      margin-top: 56px;
+    }
 
-      .rooms {
-        padding: 15px;
+    .rooms {
+      padding: 15px;
 
-        .mat-card-room {
-          .room-price {
-            font-weight: bold;
-          }
+      .mat-card-room {
+        .room-price {
+          font-weight: bold;
         }
       }
     }

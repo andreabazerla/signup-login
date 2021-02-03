@@ -1,6 +1,6 @@
-import { Beds } from './../../enums/room-type.enum';
-import { Sex } from './../../../..//src/app/enums/sex.enum';
-import { Occupation } from './../../../../src/app/enums/occupation.enum';
+import { Beds } from '../../enums/room-type.enum';
+import { Sex } from '../../enums/sex.enum';
+import { Occupation } from '../../enums/occupation.enum';
 
 export class Room {
   _id?: string;

@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
 // Models
-import { Room } from './../../../../src/app/models/room/room';
+import { Room } from '../../models/room/room.model';
 
 // Services
 import { RoomsService } from './../../services/rooms/rooms.service';
