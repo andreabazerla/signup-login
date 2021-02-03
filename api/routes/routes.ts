@@ -24,7 +24,7 @@ function setRoutes(app): void {
     );
 
   // Rooms
-  router.route('/rooms/').get(roomController.getAll);
+  router.route('/rooms').get(roomController.getRooms);
 
   app.use('/api', router);
 }

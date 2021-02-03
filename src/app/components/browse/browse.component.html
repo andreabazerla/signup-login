@@ -1,17 +1,95 @@
-<mat-tab-group mat-align-tabs="center">
-  <mat-tab label="List">
-    <div class="rooms">
-      <div fxLayout="row wrap" fxLayoutGap="15px grid">
-        <div fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="100%" fxFlex.md="50%" fxFlex.lg="33%" *ngFor="let room of rooms">
-          <mat-card class="mat-card-room">
-            <img mat-card-image src="https://via.placeholder.com/1920x1080.png">
-            <p class="room-price">€ {{ room.price }}</p>
-          </mat-card>
-        </div>
-      </div>
+<div class="browse-container">
+  <app-toolbar class="app-toolbar">
+    <div button-left>
+      <button
+        [routerLink]="'/home'"
+        type="button"
+        aria-label="Previous page"
+        mat-icon-button>
+        <mat-icon aria-label="Previous page icon">arrow_back</mat-icon>
+      </button>
     </div>
-  </mat-tab>
-  <mat-tab label="Map">
-    <ng-template matTabContent> </ng-template>
-  </mat-tab>
-</mat-tab-group>
+    <div header-text>
+      <span>{{ title }}</span>
+    </div>
+    <span spacer class="spacer"></span>
+    <div button-right>
+      <button
+        type="button"
+        aria-label="Filter list"
+        mat-icon-button
+        (click)="toggleDrawer(drawer)"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Filter list icon">filter_list</mat-icon>
+      </button>
+    </div>
+  </app-toolbar>
+</div>
+
+<mat-drawer-container class="mat-drawer-container">
+  <mat-drawer #drawer class="mat-drawer" position="end"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+      <form [formGroup]="filterForm" (ngSubmit)="onSubmit()" class="filter-form">
+        <section class="price-section">
+          <p>
+            <label for="maxPrice" class="filter-label">Price</label>
+            <mat-slider
+              id="maxPrice"
+              name="maxPrice"
+              formControlName="maxPrice"
+              #priceSlider
+              class="price-slider"
+              thumbLabel
+              [displayWith]="euroLabel"
+              min="100"
+              max="900"
+              step="100">
+            </mat-slider>
+          </p>
+        </section>
+        <section>
+          <label class="filter-label">Surface</label>
+          <p fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="15px">
+            <mat-form-field fxFlex="calc(50%-15px)">
+              <mat-label>Min</mat-label>
+              <input matInput type="number" formControlName="minSurface">
+            </mat-form-field>
+            <mat-form-field fxFlex="50%">
+              <mat-label>Max</mat-label>
+              <input matInput type="number" formControlName="maxSurface">
+            </mat-form-field>
+          </p>
+        </section>
+        <section>
+          <label class="filter-label">Tags</label>
+          <app-chips [tags]="tags" formControlName="tagChips" class="app-chips"></app-chips>
+        </section>
+        <section>
+          <p class="bottom-buttons" fxLayout="row" fxLayoutAlign="space-evenly center" fxFlexAlign="end">
+            <button mat-flat-button color="basic" type="button" class="filter-clear" (click)="clearFilter()">Clear</button>
+            <button mat-flat-button color="accent" type="submit" class="filter-submit" (click)="closeDrawer(drawer)" >Search</button>
+          </p>
+        </section>
+      </form>
+  </mat-drawer>
+  <mat-drawer-content>
+    <mat-tab-group mat-align-tabs="center" class="mat-tab-group">
+      <mat-tab label="List">
+        <div class="rooms">
+          <div fxLayout="row wrap" fxLayoutGap="15px grid">
+            <div fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="100%" fxFlex.md="50%" fxFlex.lg="33%" *ngFor="let room of rooms$ | async;">
+              <mat-card class="mat-card-room">
+                <img mat-card-image src="https://via.placeholder.com/1920x1080.png">
+                <p class="room-price">€ {{ room.price }}</p>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Map">
+      </mat-tab>
+    </mat-tab-group>
+  </mat-drawer-content>
+</mat-drawer-container>

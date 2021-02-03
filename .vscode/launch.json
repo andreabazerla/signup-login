@@ -8,6 +8,7 @@
       "name": "Attach to Chrome",
       "port": 9222,
       "request": "attach",
+      "skipFiles": ["<node_internals>/**/*.js", "${workspaceFolder}/node_modules/**/*.js"],
       "type": "pwa-chrome",
       "url": "http://localhost:4200/",
       "webRoot": "${workspaceFolder}"

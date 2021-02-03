@@ -1,16 +1,94 @@
-::ng-deep.mat-tab-label,
-::ng-deep.mat-tab-label-active {
-  width: 50% !important;
-  max-width: 200px !important;
-}
+.browse-container {
+  .app-toolbar {
+    position: fixed;
+    width: 100%;
+    z-index: 3;
 
-.rooms {
-  padding: 15px;
-
-  .mat-card-room {
-
-    .room-price {
-      font-weight: bold;
+    .spacer {
+      flex: 1 1 auto;
     }
   }
+}
+
+.mat-drawer-container {
+  min-height: 100vh;
+
+  .mat-drawer {
+    position: fixed !important;
+    width: 320px;
+    height: 100vh;
+    padding: 15px;
+    padding-top: 77px;
+    @media (max-width: 599px) {
+      padding-top: 70px;
+    }
+
+    .filter-form {
+      height: 100%;
+
+      label.filter-label {
+        font-weight: bold;
+      }
+
+      .price-slider {
+        width: 100%;
+        margin: auto;
+        display: block;
+      }
+
+      .bottom-buttons {
+        // position: fixed;
+        // bottom: 0;
+        // display: flex;
+        // justify-content: space-evenly;
+      }
+    }
+  }
+
+  .mat-drawer-content {
+    .mat-tab-group {
+      margin-top: 64px;
+      @media (max-width: 599px) {
+        margin-top: 56px;
+      }
+
+      .rooms {
+        padding: 15px;
+
+        .mat-card-room {
+          .room-price {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Tabs full width
+
+::ng-deep.mat-tab-labels {
+  @media (min-width: 599px) {
+    margin-right: 320px;
+  }
+}
+
+::ng-deep.mat-tab-label,
+::ng-deep.mat-tab-label-active {
+  max-width: 200px !important;
+  @media (max-width: 645px) {
+    width: 50% !important;
+  }
+}
+
+:host ::ng-deep .mat-tab-header {
+  position: fixed !important;
+  width: 100vw;
+  background: white;
+  z-index: 2;
+}
+
+::ng-deep .mat-tab-body-wrapper {
+  position: relative !important;
+  margin-top: 50px;
 }

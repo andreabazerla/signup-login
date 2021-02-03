@@ -19,7 +19,6 @@ const routes: Routes = [
     component: SidenavComponent,
     children: [
       { path: 'home', component: HomeComponent },
-      { path: 'browse', component: BrowseComponent },
       {
         path: 'profile',
         component: ProfileComponent,
@@ -34,8 +33,13 @@ const routes: Routes = [
         },
       ],
     },
-  { path: 'filter', component: FilterComponent },
-  { path: '', redirectTo: '/', pathMatch: 'full' },
+  {
+    path: 'browse',
+    component: BrowseComponent,
+    children: [
+      { path: 'filter', component: FilterComponent }
+    ],
+  },
   { path: '**', component: PageNotFoundComponent },
 ];
 

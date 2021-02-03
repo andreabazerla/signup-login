@@ -1,10 +1,11 @@
+// Angular modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
-
-import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
 
 // Angular Material module
 import { AngularMaterialModule } from './material/angular-material.module';
@@ -35,6 +36,7 @@ import { LoggingService } from './services/logging/logging.service';
 
 // Handlers
 import { ErrorsHandler } from './handlers/error.handler.';
+import { ChipsComponent } from './components/chips/chips.component';
 
 export function tokenGetter(): string {
   return localStorage.getItem('token');
@@ -50,6 +52,7 @@ export function tokenGetter(): string {
     BrowseComponent,
     FilterComponent,
     ToolbarComponent,
+    ChipsComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +61,7 @@ export function tokenGetter(): string {
     AngularMaterialModule,
     HttpClientModule,
     FlexLayoutModule,
+    ReactiveFormsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter,
