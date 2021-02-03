@@ -12,6 +12,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 
 // Guards
 import { ProfileGuard } from './guards/profile/profile.guard';
+import { RoomComponent } from './components/room/room.component';
 
 const routes: Routes = [
   {
@@ -27,18 +28,20 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () =>
-        import('./components/authentication/authentication.module').then(
-          (m) => m.AuthenticationModule
+          import('./components/authentication/authentication.module').then(
+            (m) => m.AuthenticationModule
           ),
-        },
-      ],
-    },
+      },
+    ],
+  },
   {
     path: 'browse',
     component: BrowseComponent,
-    children: [
-      { path: 'filter', component: FilterComponent }
-    ],
+    children: [{ path: 'filter', component: FilterComponent }],
+  },
+  {
+    path: 'room/:id',
+    component: RoomComponent,
   },
   { path: '**', component: PageNotFoundComponent },
 ];

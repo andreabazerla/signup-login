@@ -26,4 +26,8 @@ export class RoomsService {
   getRooms(params): Observable<Room[]> {
     return this.httpClient.get<Room[]>(this.API_URL + '/rooms', { params });
   }
+
+  getRoom(_id): Observable<Room> {
+    return this.httpClient.get<Room>(this.API_URL + `/room/${_id}`);
+  }
 }

@@ -37,6 +37,7 @@ import { LoggingService } from './services/logging/logging.service';
 // Handlers
 import { ErrorsHandler } from './handlers/error.handler.';
 import { ChipsComponent } from './components/chips/chips.component';
+import { RoomComponent } from './components/room/room.component';
 
 export function tokenGetter(): string {
   return localStorage.getItem('token');
@@ -53,6 +54,7 @@ export function tokenGetter(): string {
     FilterComponent,
     ToolbarComponent,
     ChipsComponent,
+    RoomComponent,
   ],
   imports: [
     BrowserModule,

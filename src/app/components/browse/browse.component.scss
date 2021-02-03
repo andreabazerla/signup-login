@@ -1,12 +1,10 @@
-.browse-container {
-  .app-toolbar {
-    position: fixed;
-    width: 100%;
-    z-index: 3;
+.app-toolbar {
+  position: fixed;
+  width: 100%;
+  z-index: 3;
 
-    .spacer {
-      flex: 1 1 auto;
-    }
+  .spacer {
+    flex: 1 1 auto;
   }
 }
 
@@ -56,8 +54,10 @@
         padding: 15px;
 
         .mat-card-room {
+          cursor: pointer;
+
           .room-price {
-            font-weight: bold;
+            // font-weight: bold;
           }
         }
       }

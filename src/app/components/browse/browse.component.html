@@ -1,30 +1,28 @@
-<div class="browse-container">
-  <app-toolbar class="app-toolbar">
-    <div button-left>
-      <button
-        [routerLink]="'/home'"
-        type="button"
-        aria-label="Previous page"
-        mat-icon-button>
-        <mat-icon aria-label="Previous page icon">arrow_back</mat-icon>
-      </button>
-    </div>
-    <div header-text>
-      <span>{{ title }}</span>
-    </div>
-    <span spacer class="spacer"></span>
-    <div button-right>
-      <button
-        type="button"
-        aria-label="Filter list"
-        mat-icon-button
-        (click)="toggleDrawer(drawer)"
-        *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Filter list icon">filter_list</mat-icon>
-      </button>
-    </div>
-  </app-toolbar>
-</div>
+<app-toolbar class="app-toolbar">
+  <div button-left>
+    <button
+      [routerLink]="'/home'"
+      type="button"
+      aria-label="Previous page"
+      mat-icon-button>
+      <mat-icon aria-label="Previous page icon">arrow_back</mat-icon>
+    </button>
+  </div>
+  <div header-text>
+    <span>{{ title }}</span>
+  </div>
+  <span spacer class="spacer"></span>
+  <div button-right>
+    <button
+      type="button"
+      aria-label="Filter list"
+      mat-icon-button
+      (click)="toggleDrawer(drawer)"
+      *ngIf="isHandset$ | async">
+      <mat-icon aria-label="Filter list icon">filter_list</mat-icon>
+    </button>
+  </div>
+</app-toolbar>
 
 <mat-drawer-container class="mat-drawer-container">
   <mat-drawer #drawer class="mat-drawer" position="end"
@@ -80,9 +78,10 @@
         <div class="rooms">
           <div fxLayout="row wrap" fxLayoutGap="15px grid">
             <div fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="100%" fxFlex.md="50%" fxFlex.lg="33%" *ngFor="let room of rooms$ | async;">
-              <mat-card class="mat-card-room">
+              <mat-card class="mat-card-room" [routerLink]="['/room', room._id]">
                 <img mat-card-image src="https://via.placeholder.com/1920x1080.png">
-                <p class="room-price">€ {{ room.price }}</p>
+                <mat-card-title>{{ room.title }}</mat-card-title>
+                <mat-card-content><p class="room-price">€{{ room.price }}/month</p></mat-card-content>
               </mat-card>
             </div>
           </div>
