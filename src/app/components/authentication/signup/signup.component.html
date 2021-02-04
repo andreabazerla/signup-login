@@ -59,8 +59,8 @@
     <mat-step [completed]="genderMaleInput.checked || genderFemaleInput.checked">
       <ng-template matStepLabel>My gender is</ng-template>
       <mat-radio-group name="gender" aria-label="Select an option" required ngModel>
-        <mat-radio-button value="1" #genderMaleInput>Male</mat-radio-button>
-        <mat-radio-button value="2" #genderFemaleInput style="margin: 0 0 0 25px;">Female</mat-radio-button>
+        <mat-radio-button value="0" #genderMaleInput>Male</mat-radio-button>
+        <mat-radio-button value="1" #genderFemaleInput style="margin: 0 0 0 25px;">Female</mat-radio-button>
       </mat-radio-group>
       <div class="stepper-button">
         <button mat-button matStepperPrevious type="button">Back</button>

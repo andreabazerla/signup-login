@@ -97,12 +97,12 @@ export class BrowseComponent implements OnInit {
       shareReplay()
     );
 
-  toggleDrawer(matSidenav: MatSidenav) {
+  toggleDrawer(matDrawer: MatDrawer) {
     const isSmallScreen = this.breakpointObserver.isMatched(
       '(max-width: 599px)'
     );
     if (isSmallScreen) {
-      matSidenav.toggle();
+      matDrawer.toggle();
     }
   }
 
