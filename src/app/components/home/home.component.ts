@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     let actionsArray: Action[] = [
-      { text: 'Cerca un nuovo coinquilino con cui vivere', link: 'homeless' },
+      { text: 'Cerca un nuovo coinquilino con cui vivere', link: '/homeless' },
       { text: 'Stai ancora cercando una stanza? Clicca qui' },
       { text: 'Aggiorna il tuo profilo per ottenere più match' },
     ];

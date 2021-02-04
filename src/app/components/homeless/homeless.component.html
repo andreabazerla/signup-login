@@ -1,0 +1,38 @@
+<app-toolbar>
+  <div button-left>
+    <button
+      [routerLink]="'/home'"
+      type="button"
+      aria-label="Previous page"
+      mat-icon-button>
+      <mat-icon aria-label="Previous page icon">arrow_back</mat-icon>
+    </button>
+  </div>
+  <div header-text>
+    <span>{{ title }}</span>
+  </div>
+  <span spacer class="spacer"></span>
+  <div button-right>
+    <button
+      type="button"
+      aria-label="Filter list"
+      mat-icon-button
+      (click)="toggleDrawer(drawer)"
+      *ngIf="isHandset$ | async">
+      <mat-icon aria-label="Filter list icon">filter_list</mat-icon>
+    </button>
+  </div>
+</app-toolbar>
+
+<mat-drawer-container class="mat-drawer-container">
+  <mat-drawer #drawer class="mat-drawer" position="end"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+  </mat-drawer>
+  <mat-drawer-content>
+    <div *ngFor="let person of homeless">
+      <p class="room-price">€ {{ person.firstName }}</p>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

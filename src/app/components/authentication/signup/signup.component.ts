@@ -32,6 +32,8 @@ export class SignupComponent implements OnInit {
     const username = form.value.username;
     const gender = form.value.gender;
     const birthday = form.value.birthday;
+    // TODO: hard-coded boolean value
+    const homeless = true;
 
     const signupPayload: SignupPayload = {
       firstName,
@@ -41,6 +43,7 @@ export class SignupComponent implements OnInit {
       username,
       gender,
       birthday,
+      homeless
     };
 
     this.authenticationService.signup(signupPayload);

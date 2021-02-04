@@ -15,6 +15,7 @@ class UserController extends BaseController {
       username: req.body.username,
       gender: req.body.gender,
       birthday: req.body.birthday,
+      homeless: req.body.homeless
     });
 
     user.setPassword(user, req.body.password);
@@ -83,6 +84,15 @@ class UserController extends BaseController {
       success: true,
       message: 'Successfully authenticated',
     });
+  }
+
+  getHomeless = async (req, res) => {
+    try {
+      const docs = await this.model.find({ _id: { $ne: req.query_id }, homeless: true });
+      res.status(200).json(docs);
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
+    }
   }
 }
 

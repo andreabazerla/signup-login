@@ -22,6 +22,7 @@ function setRoutes(app): void {
       passport.authenticate('jwt', { session: false }),
       userController.profile
     );
+  router.route('/homeless').get(userController.getHomeless);
 
   // Rooms
   router.route('/rooms').get(roomController.getRooms);

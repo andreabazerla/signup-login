@@ -9,6 +9,7 @@ import { ProfileComponent } from './components/user/profile/profile.component';
 import { BrowseComponent } from './components/browse/browse.component';
 import { FilterComponent } from './components/filter/filter.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { HomelessComponent } from './components/homeless/homeless.component';
 
 // Guards
 import { ProfileGuard } from './guards/profile/profile.guard';
@@ -39,6 +40,10 @@ const routes: Routes = [
     children: [
       { path: 'filter', component: FilterComponent }
     ],
+  },
+  {
+    path: 'homeless',
+    component: HomelessComponent
   },
   { path: '**', component: PageNotFoundComponent },
 ];

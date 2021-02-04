@@ -5,4 +5,5 @@ export class User {
   email: string;
   username: string;
   birthday: Date;
+  homeless: boolean;
 }

@@ -51,6 +51,9 @@ const UserSchema: mongoose.Schema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  homeless: {
+    type: Boolean
+  }
 });
 export interface IUser extends mongoose.Document {
   firstName: string;
@@ -61,6 +64,7 @@ export interface IUser extends mongoose.Document {
   salt: string;
   gender: Gender;
   birthday: Date;
+  homeless: boolean;
   setPassword(iUser: IUser, password: string): void;
   checkPassword(iUser: IUser, password: string): boolean;
   generateJwt(iUser: IUser): TokenPayload;

@@ -1,0 +1,24 @@
+.app-toolbar {
+  position: fixed;
+  width: 100%;
+  z-index: 3;
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+}
+
+.mat-drawer-container {
+  min-height: 100vh;
+
+  .mat-drawer {
+    position: fixed !important;
+    width: 320px;
+    height: 100vh;
+    padding: 15px;
+    padding-top: 77px;
+    @media (max-width: 599px) {
+      padding-top: 70px;
+    }
+  }
+}

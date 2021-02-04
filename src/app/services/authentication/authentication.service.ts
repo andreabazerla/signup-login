@@ -29,6 +29,7 @@ export interface SignupPayload {
   username: string;
   gender: number;
   birthday: Date;
+  homeless: boolean
 }
 
 export interface LoginPayload {
@@ -70,7 +71,7 @@ export class AuthenticationService {
     const token = localStorage.getItem(this.TOKEN);
     if (token) {
       const decodedUser = this.decodeUserFromToken(token);
-      decodedUser.subscribe((settedUser) => this.setCurrentUser(settedUser));
+      decodedUser.subscribe((settedUser) => this.fillCurrentUser(settedUser));
     }
   }
 
@@ -99,6 +100,15 @@ export class AuthenticationService {
   }
 
   getCurrentUser(): User {
+    return this.currentUser;
+  }
+
+  getUser(): User {
+    const token = localStorage.getItem(this.TOKEN);
+    if (token) {
+      const decodedUser = this.decodeUserFromToken(token);
+      decodedUser.subscribe((settedUser) => this.fillCurrentUser(settedUser));
+    }
     return this.currentUser;
   }
 
@@ -131,7 +141,7 @@ export class AuthenticationService {
               const decodedUser = this.decodeUserFromToken(token);
               if (decodedUser) {
                 decodedUser.subscribe((settedUser) =>
-                  this.setCurrentUser(settedUser)
+                  this.fillCurrentUser(settedUser)
                 );
               }
 
@@ -256,7 +266,7 @@ export class AuthenticationService {
     return null;
   }
 
-  setCurrentUser(decodedUser): void {
+  fillCurrentUser(decodedUser): void {
     this.setIsAuthenticated(true);
     this.currentUser._id = decodedUser._id;
     this.currentUser.username = decodedUser.username;
@@ -264,6 +274,7 @@ export class AuthenticationService {
     this.currentUser.lastName = decodedUser.lastName;
     this.currentUser.email = decodedUser.email;
     this.currentUser.birthday = decodedUser.birthday;
+    this.currentUser.homeless = decodedUser.homeless;
   }
 
   private getLocalStorageFieldValue(field: string): string {
@@ -280,6 +291,7 @@ export class AuthenticationService {
     return !this.jwtHelperService.isTokenExpired(bearerToken);
   }
 
+  // TODO: to delete?
   // private buildLocalStorageField(field: string, fieldValue: string): object {
   //   const stringsArray = new Array(field, fieldValue);
   //   return JSON.parse('{ ' + stringsArray.join(': ') + ' }');
